@@ -17,16 +17,16 @@ module Freegeoip
 
       {
         ip: ip,
-        country_code: result.dig("country", "iso_code"),
-        country_name: result.dig("country", "names", locale),
-        region_code: result.dig("subdivisions", 0, "iso_code"),
-        region_name: result.dig("subdivisions", 0, "names", locale),
-        city: result.dig("city", "names", locale),
-        zip_code: result.dig("postal", "code"),
-        time_zone: result.dig("location", "time_zone"),
-        latitude: result.dig("location", "latitude"),
-        longitude: result.dig("location", "longitude"),
-        metro_code: (result.dig("location", "metro_code") || 0),
+        country_code: result["country"] && result["country"]["iso_code"],
+        country_name: result["country"] && result["country"]["names"] && result["country"]["names"][locale],
+        region_code: result["subdivisions"] && result["subdivisions"][0] && result["subdivisions"][0]["iso_code"],
+        region_name: result["subdivisions"] && result["subdivisions"][0] && result["subdivisions"][0]["names"] && result["subdivisions"][0]["names"][locale],
+        city: result["city"] && result["city"]["names"] && result["city"]["names"][locale],
+        zip_code: result["postal"] && result["postal"]["code"],
+        time_zone: result["location"] && result["location"]["time_zone"],
+        latitude: result["location"] && result["location"]["latitude"],
+        longitude: result["location"] && result["location"]["longitude"],
+        metro_code: result["location"] && result["location"]["metro_code"] || 0,
       }
     end
 
